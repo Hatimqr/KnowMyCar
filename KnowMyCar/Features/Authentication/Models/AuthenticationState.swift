@@ -32,16 +32,19 @@ enum AuthenticationError: LocalizedError, Equatable {
     case cancelled
     case networkError
     case invalidCredentials
+    case googleSignInFailed
     case unknown(String)
     
     var errorDescription: String? {
         switch self {
         case .cancelled:
-            return "Authentication was cancelled"
+            return "Sign in was cancelled"
         case .networkError:
             return "Network connection error. Please check your internet connection."
         case .invalidCredentials:
             return "Invalid credentials. Please try again."
+        case .googleSignInFailed:
+            return "Google Sign-In failed. Please try again."
         case .unknown(let message):
             return "Authentication failed: \(message)"
         }

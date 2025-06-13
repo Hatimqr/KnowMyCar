@@ -8,10 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var authViewModel = AuthenticationViewModel()
+    
     var body: some View {
-        // Temporary placeholder - will be replaced in Phase 1E
-        Text("KnowMyCar - Setting up...")
-            .font(.title)
+        Group {
+            switch authViewModel.authenticationState {
+            case .unauthenticated:
+                WelcomeView()
+                    .environmentObject(authViewModel)
+                
+            case .authenticating:
+                LoadingView()
+                
+            case .authenticated:
+                MainTabView()
+                    .environmentObject(authViewModel)
+                
+            case .error:
+                WelcomeView()
+                    .environmentObject(authViewModel)
+            }
+        }
+        .animation(.easeInOut, value: authViewModel.authenticationState.isAuthenticated)
+    }
+}
+
+struct LoadingView: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle())
+                .scaleEffect(1.5)
+            
+            Text("Setting up your account...")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
     }
 }
 
