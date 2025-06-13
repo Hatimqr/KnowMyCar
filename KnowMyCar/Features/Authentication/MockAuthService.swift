@@ -18,23 +18,6 @@ class MockAuthService: AuthenticationService {
     
     private var mockUser: User?
     
-    func signInWithApple() async throws -> User {
-        authenticationState = .authenticating
-        
-        // Simulate network delay
-        try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
-        
-        let user = User(
-            email: "test@apple.com",
-            displayName: "Test User (Apple)",
-            authProvider: .apple
-        )
-        
-        mockUser = user
-        authenticationState = .authenticated(user)
-        return user
-    }
-    
     func signInWithGoogle() async throws -> User {
         authenticationState = .authenticating
         

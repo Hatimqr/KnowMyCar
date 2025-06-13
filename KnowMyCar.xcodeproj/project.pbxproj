@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8FF7ADA12DFC06A100C8ED38 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8FF7ADA02DFC06A100C8ED38 /* FirebaseAuth */; };
+		8FF7ADA32DFC06A100C8ED38 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8FF7ADA22DFC06A100C8ED38 /* FirebaseFirestore */; };
+		8FF7ADA62DFC06DB00C8ED38 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 8FF7ADA52DFC06DB00C8ED38 /* GoogleSignIn */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		8F0D05892DF79E9500C784AD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,9 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8F0D05792DF79E9300C784AD /* KnowMyCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = KnowMyCar.app; path = "/Users/hatim/Code/KnowMyCar/build/Debug-iphoneos/KnowMyCar.app"; sourceTree = "<absolute>"; };
-		8F0D05882DF79E9500C784AD /* KnowMyCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KnowMyCarTests.xctest; path = "/Users/hatim/Code/KnowMyCar/build/Debug-iphoneos/KnowMyCar.app/PlugIns/KnowMyCarTests.xctest"; sourceTree = "<absolute>"; };
-		8F0D05922DF79E9500C784AD /* KnowMyCarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KnowMyCarUITests.xctest; path = "/Users/hatim/Code/KnowMyCar/build/Debug-iphoneos/KnowMyCarUITests-Runner.app/PlugIns/KnowMyCarUITests.xctest"; sourceTree = "<absolute>"; };
+		8FF7AD572DFBFE8C00C8ED38 /* KnowMyCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KnowMyCar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FF7AD582DFBFE8C00C8ED38 /* KnowMyCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KnowMyCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FF7AD592DFBFE8C00C8ED38 /* KnowMyCarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KnowMyCarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -76,6 +82,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FF7ADA12DFC06A100C8ED38 /* FirebaseAuth in Frameworks */,
+				8FF7ADA32DFC06A100C8ED38 /* FirebaseFirestore in Frameworks */,
+				8FF7ADA62DFC06DB00C8ED38 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +111,9 @@
 				8F0D057B2DF79E9300C784AD /* KnowMyCar */,
 				8F0D058B2DF79E9500C784AD /* KnowMyCarTests */,
 				8F0D05952DF79E9500C784AD /* KnowMyCarUITests */,
+				8FF7AD572DFBFE8C00C8ED38 /* KnowMyCar.app */,
+				8FF7AD582DFBFE8C00C8ED38 /* KnowMyCarTests.xctest */,
+				8FF7AD592DFBFE8C00C8ED38 /* KnowMyCarUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,9 +137,12 @@
 			);
 			name = KnowMyCar;
 			packageProductDependencies = (
+				8FF7ADA02DFC06A100C8ED38 /* FirebaseAuth */,
+				8FF7ADA22DFC06A100C8ED38 /* FirebaseFirestore */,
+				8FF7ADA52DFC06DB00C8ED38 /* GoogleSignIn */,
 			);
 			productName = KnowMyCar;
-			productReference = 8F0D05792DF79E9300C784AD /* KnowMyCar.app */;
+			productReference = 8FF7AD572DFBFE8C00C8ED38 /* KnowMyCar.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8F0D05872DF79E9500C784AD /* KnowMyCarTests */ = {
@@ -150,7 +165,7 @@
 			packageProductDependencies = (
 			);
 			productName = KnowMyCarTests;
-			productReference = 8F0D05882DF79E9500C784AD /* KnowMyCarTests.xctest */;
+			productReference = 8FF7AD582DFBFE8C00C8ED38 /* KnowMyCarTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		8F0D05912DF79E9500C784AD /* KnowMyCarUITests */ = {
@@ -173,7 +188,7 @@
 			packageProductDependencies = (
 			);
 			productName = KnowMyCarUITests;
-			productReference = 8F0D05922DF79E9500C784AD /* KnowMyCarUITests.xctest */;
+			productReference = 8FF7AD592DFBFE8C00C8ED38 /* KnowMyCarUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -208,6 +223,10 @@
 			);
 			mainGroup = 8F0D05702DF79E9300C784AD;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8FF7AD9F2DFC06A100C8ED38 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				8FF7ADA42DFC06DB00C8ED38 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8F0D05702DF79E9300C784AD;
 			projectDirPath = "";
@@ -571,6 +590,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8FF7AD9F2DFC06A100C8ED38 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.14.0;
+			};
+		};
+		8FF7ADA42DFC06DB00C8ED38 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8FF7ADA02DFC06A100C8ED38 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FF7AD9F2DFC06A100C8ED38 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		8FF7ADA22DFC06A100C8ED38 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FF7AD9F2DFC06A100C8ED38 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		8FF7ADA52DFC06DB00C8ED38 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FF7ADA42DFC06DB00C8ED38 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8F0D05712DF79E9300C784AD /* Project object */;
 }

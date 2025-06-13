@@ -15,9 +15,6 @@ protocol AuthenticationService: ObservableObject {
     /// Publisher for authentication state changes
     var authenticationStatePublisher: Published<AuthenticationState>.Publisher { get }
     
-    /// Sign in with Apple ID
-    func signInWithApple() async throws -> User
-    
     /// Sign in with Google
     func signInWithGoogle() async throws -> User
     
