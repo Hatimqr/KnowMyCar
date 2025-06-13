@@ -18,10 +18,38 @@ class MockAuthService: AuthenticationService {
     
     private var mockUser: User?
     
-    // Mock user database for testing
+    // Updated mock user database with real credentials
     private var mockUsers: [String: (email: String, password: String, displayName: String?)] = [
-        "test@example.com": ("test@example.com", "password123", "Test User")
+        "test@test.com": ("test@test.com", "tester123", "Test User"),
+        "test@example.com": ("test@example.com", "password123", "Test User Example") // Keep original for fallback
     ]
+    
+    // Add auto-login flag
+    private let autoLoginEnabled: Bool
+    
+    init() {
+        self.autoLoginEnabled = true
+        
+        // Auto-login if enabled
+        if autoLoginEnabled {
+            Task {
+                await performAutoLogin()
+            }
+        }
+    }
+    
+    // New auto-login method
+    private func performAutoLogin() async {
+        do {
+            // Automatically sign in with the test account
+            _ = try await signInWithEmail("test@test.com", password: "tester123")
+            print("✅ MockAuthService: Auto-login successful for test@test.com")
+        } catch {
+            print("❌ MockAuthService: Auto-login failed - \(error.localizedDescription)")
+            // Fallback to unauthenticated state
+            authenticationState = .unauthenticated
+        }
+    }
     
     func signInWithGoogle() async throws -> User {
         authenticationState = .authenticating
@@ -29,8 +57,9 @@ class MockAuthService: AuthenticationService {
         // Simulate network delay
         try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         
+        // Use the real test account data for Google sign-in simulation
         let user = User(
-            email: "test@gmail.com",
+            email: "test@test.com",
             displayName: "Test User (Google)",
             authProvider: .google
         )
@@ -43,8 +72,9 @@ class MockAuthService: AuthenticationService {
     func signInWithEmail(_ email: String, password: String) async throws -> User {
         authenticationState = .authenticating
         
-        // Simulate network delay
-        try await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
+        // Simulate network delay (reduced for auto-login)
+        let delay: UInt64 = autoLoginEnabled && email == "test@test.com" ? 100_000_000 : 500_000_000 // 0.1s for auto-login, 0.5s for manual
+        try await Task.sleep(nanoseconds: delay)
         
         // Check if user exists and password is correct
         if let mockUserData = mockUsers[email], mockUserData.password == password {
@@ -64,27 +94,24 @@ class MockAuthService: AuthenticationService {
         }
     }
     
+    // Rest of the methods remain the same...
     func signUpWithEmail(_ email: String, password: String, displayName: String?) async throws -> User {
         authenticationState = .authenticating
         
-        // Simulate network delay
-        try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         
-        // Check if user already exists
         if mockUsers[email] != nil {
             let error = AuthenticationError.emailAlreadyInUse
             authenticationState = .error(error)
             throw error
         }
         
-        // Check password strength (simple validation for testing)
         if password.count < 6 {
             let error = AuthenticationError.weakPassword
             authenticationState = .error(error)
             throw error
         }
         
-        // Add user to mock database
         mockUsers[email] = (email, password, displayName)
         
         let user = User(
@@ -112,15 +139,10 @@ class MockAuthService: AuthenticationService {
     }
     
     func resetPassword(email: String) async throws {
-        // Simulate network delay
-        try await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
+        try await Task.sleep(nanoseconds: 500_000_000)
         
-        // Check if user exists
         if mockUsers[email] == nil {
             throw AuthenticationError.invalidCredentials
         }
-        
-        // In a real implementation, this would send an email
-        // For mock, we just succeed silently
     }
 }

@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var authViewModel = AuthenticationViewModel()
+    // Enable auto-login for mock service in development
+    @StateObject private var authViewModel = AuthenticationViewModel(
+        useFirebase: false // Set to false to use mock service
+    )
     
     var body: some View {
         Group {
