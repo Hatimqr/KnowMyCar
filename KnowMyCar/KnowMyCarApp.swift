@@ -11,8 +11,9 @@ import SwiftData
 @main
 struct KnowMyCarApp: App {
     var sharedModelContainer: ModelContainer = {
+        // TODO: Will add our actual models (User, Vehicle, MaintenanceRecord) in later sprints
         let schema = Schema([
-            Item.self,
+            // Empty for now - removing Item demo model
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

@@ -24,14 +24,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8F0D05792DF79E9300C784AD /* KnowMyCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KnowMyCar.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F0D05882DF79E9500C784AD /* KnowMyCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KnowMyCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F0D05922DF79E9500C784AD /* KnowMyCarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KnowMyCarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F0D05792DF79E9300C784AD /* KnowMyCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = KnowMyCar.app; path = "/Users/hatim/Code/KnowMyCar/build/Debug-iphoneos/KnowMyCar.app"; sourceTree = "<absolute>"; };
+		8F0D05882DF79E9500C784AD /* KnowMyCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KnowMyCarTests.xctest; path = "/Users/hatim/Code/KnowMyCar/build/Debug-iphoneos/KnowMyCar.app/PlugIns/KnowMyCarTests.xctest"; sourceTree = "<absolute>"; };
+		8F0D05922DF79E9500C784AD /* KnowMyCarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KnowMyCarUITests.xctest; path = "/Users/hatim/Code/KnowMyCar/build/Debug-iphoneos/KnowMyCarUITests-Runner.app/PlugIns/KnowMyCarUITests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8F38793F2DFBFBE400E43865 /* Exceptions for "KnowMyCar" folder in "KnowMyCar" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				.gitignore,
+			);
+			target = 8F0D05782DF79E9300C784AD /* KnowMyCar */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		8F3879402DFBFBE400E43865 /* Exceptions for "KnowMyCar" folder in "Compile Sources" phase from "KnowMyCar" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 8F0D05752DF79E9300C784AD /* Sources */;
+			membershipExceptions = (
+				.gitignore,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8F0D057B2DF79E9300C784AD /* KnowMyCar */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8F38793F2DFBFBE400E43865 /* Exceptions for "KnowMyCar" folder in "KnowMyCar" target */,
+				8F3879402DFBFBE400E43865 /* Exceptions for "KnowMyCar" folder in "Compile Sources" phase from "KnowMyCar" target */,
+			);
 			path = KnowMyCar;
 			sourceTree = "<group>";
 		};
@@ -78,18 +102,7 @@
 				8F0D057B2DF79E9300C784AD /* KnowMyCar */,
 				8F0D058B2DF79E9500C784AD /* KnowMyCarTests */,
 				8F0D05952DF79E9500C784AD /* KnowMyCarUITests */,
-				8F0D057A2DF79E9300C784AD /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		8F0D057A2DF79E9300C784AD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8F0D05792DF79E9300C784AD /* KnowMyCar.app */,
-				8F0D05882DF79E9500C784AD /* KnowMyCarTests.xctest */,
-				8F0D05922DF79E9500C784AD /* KnowMyCarUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,7 +209,7 @@
 			mainGroup = 8F0D05702DF79E9300C784AD;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 8F0D057A2DF79E9300C784AD /* Products */;
+			productRefGroup = 8F0D05702DF79E9300C784AD;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
