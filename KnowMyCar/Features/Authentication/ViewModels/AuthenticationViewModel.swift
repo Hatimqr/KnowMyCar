@@ -62,7 +62,49 @@ class AuthenticationViewModel: ObservableObject {
                 // AuthenticationState will be updated automatically via publisher
             } catch {
                 // Error will be handled via publisher
-                print("Sign in error: \(error)")
+                print("Google sign in error: \(error)")
+            }
+        }
+    }
+    
+    func signInWithEmail(email: String, password: String) {
+        Task {
+            do {
+                errorMessage = nil
+                _ = try await authService.signInWithEmail(email, password: password)
+                // AuthenticationState will be updated automatically via publisher
+            } catch {
+                // Error will be handled via publisher
+                print("Email sign in error: \(error)")
+            }
+        }
+    }
+    
+    func signUpWithEmail(email: String, password: String, displayName: String?) {
+        Task {
+            do {
+                errorMessage = nil
+                _ = try await authService.signUpWithEmail(email, password: password, displayName: displayName)
+                // AuthenticationState will be updated automatically via publisher
+            } catch {
+                // Error will be handled via publisher
+                print("Email sign up error: \(error)")
+            }
+        }
+    }
+    
+    func resetPassword(email: String) {
+        Task {
+            do {
+                errorMessage = nil
+                try await authService.resetPassword(email: email)
+                // You might want to show a success message here
+            } catch {
+                if let authError = error as? AuthenticationError {
+                    errorMessage = authError.localizedDescription
+                } else {
+                    errorMessage = "Failed to send password reset email"
+                }
             }
         }
     }

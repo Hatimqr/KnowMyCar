@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AuthenticationState: Equatable, Sendable {  // ← Add Sendable
+enum AuthenticationState: Equatable, Sendable {
     case unauthenticated
     case authenticating
     case authenticated(User)
@@ -28,10 +28,12 @@ enum AuthenticationState: Equatable, Sendable {  // ← Add Sendable
     }
 }
 
-enum AuthenticationError: LocalizedError, Equatable, Sendable {  // ← Add Sendable
+enum AuthenticationError: LocalizedError, Equatable, Sendable {
     case cancelled
     case networkError
     case invalidCredentials
+    case emailAlreadyInUse
+    case weakPassword
     case googleSignInFailed
     case unknown(String)
     
@@ -42,7 +44,11 @@ enum AuthenticationError: LocalizedError, Equatable, Sendable {  // ← Add Send
         case .networkError:
             return "Network connection error. Please check your internet connection."
         case .invalidCredentials:
-            return "Invalid credentials. Please try again."
+            return "Invalid email or password. Please try again."
+        case .emailAlreadyInUse:
+            return "This email address is already registered. Please sign in instead."
+        case .weakPassword:
+            return "Password is too weak. Please choose a stronger password."
         case .googleSignInFailed:
             return "Google Sign-In failed. Please try again."
         case .unknown(let message):

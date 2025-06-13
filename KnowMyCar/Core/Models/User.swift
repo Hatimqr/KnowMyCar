@@ -18,7 +18,7 @@ final class User: Sendable {
     var createdDate: Date = Date()
     var lastLoginDate: Date = Date()
     
-    init(email: String, displayName: String? = nil, authProvider: AuthProvider = .google) {
+    init(email: String, displayName: String? = nil, authProvider: AuthProvider = .email) {
         self.email = email
         self.displayName = displayName
         self.authProvider = authProvider
@@ -33,13 +33,16 @@ extension User: Equatable {
 }
 
 enum AuthProvider: String, CaseIterable, Codable {
+    case email = "email"
     case google = "google"
     // Can add apple later when you get developer account
     
     var displayName: String {
         switch self {
+        case .email:
+            return "Email"
         case .google:
-            return "Sign in with Google"
+            return "Google"
         }
     }
 }

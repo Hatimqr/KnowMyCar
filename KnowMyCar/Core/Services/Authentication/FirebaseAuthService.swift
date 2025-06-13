@@ -31,7 +31,7 @@ class FirebaseAuthService: AuthenticationService {
                     let user = User(
                         email: firebaseUser.email ?? "",
                         displayName: firebaseUser.displayName,
-                        authProvider: .google
+                        authProvider: firebaseUser.providerData.first?.providerID == "google.com" ? .google : .email
                     )
                     self?.currentUser = user
                     self?.authenticationState = .authenticated(user)
@@ -110,6 +110,69 @@ class FirebaseAuthService: AuthenticationService {
         }
     }
     
+    func signInWithEmail(_ email: String, password: String) async throws -> User {
+        authenticationState = .authenticating
+        
+        do {
+            let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+            
+            let user = User(
+                email: authResult.user.email ?? "",
+                displayName: authResult.user.displayName,
+                authProvider: .email
+            )
+            
+            await MainActor.run {
+                self.currentUser = user
+                self.authenticationState = .authenticated(user)
+            }
+            
+            return user
+            
+        } catch {
+            let authError = mapFirebaseError(error)
+            await MainActor.run {
+                self.authenticationState = .error(authError)
+            }
+            throw authError
+        }
+    }
+    
+    func signUpWithEmail(_ email: String, password: String, displayName: String?) async throws -> User {
+        authenticationState = .authenticating
+        
+        do {
+            let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
+            
+            // Update display name if provided
+            if let displayName = displayName {
+                let changeRequest = authResult.user.createProfileChangeRequest()
+                changeRequest.displayName = displayName
+                try await changeRequest.commitChanges()
+            }
+            
+            let user = User(
+                email: authResult.user.email ?? "",
+                displayName: displayName ?? authResult.user.displayName,
+                authProvider: .email
+            )
+            
+            await MainActor.run {
+                self.currentUser = user
+                self.authenticationState = .authenticated(user)
+            }
+            
+            return user
+            
+        } catch {
+            let authError = mapFirebaseError(error)
+            await MainActor.run {
+                self.authenticationState = .error(authError)
+            }
+            throw authError
+        }
+    }
+    
     func getCurrentUser() -> User? {
         return currentUser
     }
@@ -127,5 +190,38 @@ class FirebaseAuthService: AuthenticationService {
     
     func validateSession() async -> Bool {
         return Auth.auth().currentUser != nil
+    }
+    
+    func resetPassword(email: String) async throws {
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+        } catch {
+            throw mapFirebaseError(error)
+        }
+    }
+    
+    // MARK: - Private Helper Methods
+    
+    private func mapFirebaseError(_ error: Error) -> AuthenticationError {
+        guard let authError = error as? AuthErrorCode else {
+            return AuthenticationError.unknown(error.localizedDescription)
+        }
+        
+        switch authError.code {
+        case .invalidEmail:
+            return AuthenticationError.invalidCredentials
+        case .wrongPassword:
+            return AuthenticationError.invalidCredentials
+        case .userNotFound:
+            return AuthenticationError.invalidCredentials
+        case .emailAlreadyInUse:
+            return AuthenticationError.emailAlreadyInUse
+        case .weakPassword:
+            return AuthenticationError.weakPassword
+        case .networkError:
+            return AuthenticationError.networkError
+        default:
+            return AuthenticationError.unknown(error.localizedDescription)
+        }
     }
 }

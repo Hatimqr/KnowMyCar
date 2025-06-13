@@ -18,6 +18,12 @@ protocol AuthenticationService: ObservableObject {
     /// Sign in with Google
     func signInWithGoogle() async throws -> User
     
+    /// Sign in with email and password
+    func signInWithEmail(_ email: String, password: String) async throws -> User
+    
+    /// Sign up with email and password
+    func signUpWithEmail(_ email: String, password: String, displayName: String?) async throws -> User
+    
     /// Get currently authenticated user
     func getCurrentUser() -> User?
     
@@ -26,4 +32,7 @@ protocol AuthenticationService: ObservableObject {
     
     /// Check if user session is still valid
     func validateSession() async -> Bool
+    
+    /// Reset password for email
+    func resetPassword(email: String) async throws
 }
