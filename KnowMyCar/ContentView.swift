@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     // Enable auto-login for mock service in development
     @StateObject private var authViewModel = AuthenticationViewModel(
-        useFirebase: false // Set to false to use mock service
+        useFirebase: true // Set to false to use mock service
     )
     
     var body: some View {
@@ -33,6 +33,12 @@ struct ContentView: View {
             }
         }
         .animation(.easeInOut, value: authViewModel.authenticationState.isAuthenticated)
+        .onAppear {
+//            ensures ssession persistence
+            Task {
+                // The AuthenticationViewModel will automatically check for existing sessions through the FirebaseAuthService's init() method
+            }
+        }
     }
 }
 
