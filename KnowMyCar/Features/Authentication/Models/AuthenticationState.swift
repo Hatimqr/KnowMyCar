@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AuthenticationState: Equatable {
+enum AuthenticationState: Equatable, Sendable {  // ← Add Sendable
     case unauthenticated
     case authenticating
     case authenticated(User)
@@ -28,7 +28,7 @@ enum AuthenticationState: Equatable {
     }
 }
 
-enum AuthenticationError: LocalizedError, Equatable {
+enum AuthenticationError: LocalizedError, Equatable, Sendable {  // ← Add Sendable
     case cancelled
     case networkError
     case invalidCredentials

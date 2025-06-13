@@ -18,7 +18,7 @@ class AuthenticationViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     // For development - switch between Mock and Firebase
-    init(useFirebase: Bool = false) {
+    init(useFirebase: Bool = true) {
         if useFirebase {
             self.authService = FirebaseAuthService()
         } else {

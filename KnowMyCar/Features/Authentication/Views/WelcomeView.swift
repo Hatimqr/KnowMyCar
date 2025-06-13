@@ -5,18 +5,10 @@
 //  Created by Hatim Rehmanjee on 6/13/25.
 //
 
-
-//
-//  WelcomeView.swift
-//  KnowMyCar
-//
-//  Created by Hatim Rehmanjee on 6/13/25.
-//
-
 import SwiftUI
 
 struct WelcomeView: View {
-    @StateObject private var viewModel = AuthenticationViewModel()
+    @EnvironmentObject var viewModel: AuthenticationViewModel  // ← Use injected ViewModel
     
     var body: some View {
         GeometryReader { geometry in
@@ -60,9 +52,9 @@ struct WelcomeView: View {
                         
                         // Google Sign-In Button
                         GoogleSignInButton(action: {
-                            viewModel.signInWithGoogle()
+                            viewModel.signInWithGoogle()  // ← Use injected ViewModel
                         })
-                        .disabled(viewModel.isLoading)
+                        .disabled(viewModel.isLoading)  // ← Use injected ViewModel
                     }
                     
                     Spacer()
@@ -81,7 +73,7 @@ struct WelcomeView: View {
             }
         }
         .overlay {
-            if viewModel.isLoading {
+            if viewModel.isLoading {  // ← Use injected ViewModel
                 LoadingOverlay()
             }
         }
@@ -90,4 +82,5 @@ struct WelcomeView: View {
 
 #Preview {
     WelcomeView()
+        .environmentObject(AuthenticationViewModel())  // ← Preview uses injected ViewModel
 }

@@ -20,11 +20,12 @@ class FirebaseAuthService: AuthenticationService {
     }
     
     private var currentUser: User?
+    private var authStateHandle: AuthStateDidChangeListenerHandle?
     
     init() {
         // Listen for Firebase auth state changes
-        Auth.auth().addStateDidChangeListener { [weak self] _, firebaseUser in
-            Task { @MainActor in
+        authStateHandle = Auth.auth().addStateDidChangeListener { [weak self] _, firebaseUser in
+            Task { @MainActor [weak self] in
                 if let firebaseUser = firebaseUser {
                     // Convert Firebase user to our User model
                     let user = User(
@@ -42,26 +43,44 @@ class FirebaseAuthService: AuthenticationService {
         }
     }
     
+    deinit {
+        if let handle = authStateHandle {
+            Auth.auth().removeStateDidChangeListener(handle)
+        }
+    }
+    
     func signInWithGoogle() async throws -> User {
         authenticationState = .authenticating
         
         do {
             guard let clientID = FirebaseApp.app()?.options.clientID else {
-                throw AuthenticationError.unknown("Google Client ID not found")
+                let error = AuthenticationError.unknown("Google Client ID not found")
+                await MainActor.run {
+                    self.authenticationState = .error(error)
+                }
+                throw error
             }
             
             let config = GIDConfiguration(clientID: clientID)
             GIDSignIn.sharedInstance.configuration = config
             
-            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                  let rootViewController = windowScene.windows.first?.rootViewController else {
-                throw AuthenticationError.unknown("Root view controller not found")
+            guard let windowScene = await UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let rootViewController = await windowScene.windows.first?.rootViewController else {
+                let error = AuthenticationError.unknown("Root view controller not found")
+                await MainActor.run {
+                    self.authenticationState = .error(error)
+                }
+                throw error
             }
             
             let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
             
             guard let idToken = result.user.idToken?.tokenString else {
-                throw AuthenticationError.unknown("Failed to get ID token")
+                let error = AuthenticationError.unknown("Failed to get ID token")
+                await MainActor.run {
+                    self.authenticationState = .error(error)
+                }
+                throw error
             }
             
             let accessToken = result.user.accessToken.tokenString
@@ -75,13 +94,19 @@ class FirebaseAuthService: AuthenticationService {
                 authProvider: .google
             )
             
-            currentUser = user
-            authenticationState = .authenticated(user)
+            await MainActor.run {
+                self.currentUser = user
+                self.authenticationState = .authenticated(user)
+            }
+            
             return user
             
         } catch {
-            authenticationState = .error(.unknown(error.localizedDescription))
-            throw error
+            let authError = AuthenticationError.unknown(error.localizedDescription)
+            await MainActor.run {
+                self.authenticationState = .error(authError)
+            }
+            throw authError
         }
     }
     
