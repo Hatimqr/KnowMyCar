@@ -7,9 +7,25 @@
 
 import SwiftUI
 import SwiftData
+import FirebaseCore
+
+
+// Add AppDelegate class
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication,
+                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
+}
+
 
 @main
 struct KnowMyCarApp: App {
+    
+    // Connect AppDelegate to SwiftUI
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             User.self,
